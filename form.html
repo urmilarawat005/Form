@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup/Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+  font-family: sans-serif;
+  background-color: black;
+  color: #fff;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header ul li {
+  display: inline;
+  margin-left: 10px;
+}
+
+.header ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.page {
+  padding: 150px;
+}
+
+
+.page input[type="text"],
+.page input[type="email"],
+.page input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #444;
+  color: #fff;
+  margin-top: 9px;
+}
+
+#error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.page button {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 20px;
+  
+}
+  </style>
+</head>
+<body>
+
+  <!-- <div class="container"> -->
+    <div class="header">
+        <ul>
+        <li><a href="#">Header</a></li>
+    </ul>
+      <ul>
+        <li><a href="#">Signup</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </div>
+    <hr>
+
+    <div class="page">
+      <h1>Signup</h1>
+      <form>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" name="fullName" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+      <button type="submit">Signup</button>
+    </div>
+    </form>
+
+
+<script>
+      // Utility function to generate a random access token
+      function generateAccessToken() {
+      return Array.from(crypto.getRandomValues(new Uint8Array(16)))
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Collect user input
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Validation checks
+      if (!fullName || !email || !password || !confirmPassword) {
+        document.getElementById('message').innerHTML = "<p class='error'>All fields are required!</p>";
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById('message').innerHTML = "<p class='error'>Passwords do not match!</p>";
+        return;
+      }
+
+      // Create user object
+      const user = {
+        fullName,
+        email,
+        password,
+        accessToken: generateAccessToken()
+      };
+
+      // Save user object in localStorage
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // Display success message and redirect to profile page
+      document.getElementById('message').innerHTML = "<p class='success'>Sign Up Successful!</p>";
+      setTimeout(function() {
+        window.location.href = "/profile.html";
+      }, 1500);
+    });
+</script>
+
+</body>
+</html>
+
+   
+
+  
